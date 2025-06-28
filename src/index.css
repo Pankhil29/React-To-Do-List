@@ -26,7 +26,7 @@ h1 {
 
 .input-group input {
   padding: 10px;
-  width: 70%;
+  min-width: 40%;
   font-size: 1rem;
   border-radius: 8px;
   border: none;
@@ -45,6 +45,8 @@ h1 {
 .task-list {
   list-style: none;
   padding: 0;
+  width: 50%;
+  margin: auto;
 }
 
 .task-item {
@@ -74,9 +76,4 @@ h1 {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.no-task {
-  color: gray;
-  font-style: italic;
 }

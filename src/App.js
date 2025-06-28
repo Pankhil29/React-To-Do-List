@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./index.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -10,21 +10,17 @@ const App = () => {
     if (input.trim() === "") return;
 
     if (editId !== null) {
-      const updatedTasks = tasks.map((task, index) =>
-        index === editId ? input : task
-      );
-      setTasks(updatedTasks);
+      const updated = tasks.map((task, i) => (i === editId ? input : task));
+      setTasks(updated);
       setEditId(null);
     } else {
       setTasks([...tasks, input]);
     }
-
     setInput("");
   };
 
   const handleDelete = (index) => {
-    const updated = tasks.filter((_, i) => i !== index);
-    setTasks(updated);
+    setTasks(tasks.filter((_, i) => i !== index));
   };
 
   const handleEdit = (index) => {
@@ -39,32 +35,39 @@ const App = () => {
   };
 
   return (
-    <div className="todo-container">
-      <h1>To-Do List</h1>
-      <div className="input-group">
+    <div className="container py-5 ">
+      <h2 className="text-center mb-4">📝 To-Do List</h2>
+
+      {/* Input Group */}
+      <div className="input-group mb-3">
         <input
           type="text"
+          className="form-control"
           placeholder="Enter task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={handleAdd}>
+        <button className="btn btn-primary" onClick={handleAdd}>
           {editId !== null ? "Update" : "Add"}
         </button>
       </div>
 
+      {/* No tasks */}
       {tasks.length === 0 ? (
-        <p className="no-task">No tasks available</p>
+        <p className="text-center">No tasks available</p>
       ) : (
-        <ul className="task-list">
+        <ul className="task-list  mb-3">
           {tasks.map((task, i) => (
-            <li key={i} className="task-item">
+            <li
+              key={i}
+              className="d-flex task-item justify-content-between align-items-center"
+            >
               <span>{task}</span>
               <div className="btn-group">
-                <button className="edit-btn" onClick={() => handleEdit(i)}>
+                <button className="btn" onClick={() => handleEdit(i)}>
                   ✏️
                 </button>
-                <button className="delete-btn" onClick={() => handleDelete(i)}>
+                <button className="btn" onClick={() => handleDelete(i)}>
                   ❌
                 </button>
               </div>
@@ -73,10 +76,13 @@ const App = () => {
         </ul>
       )}
 
+      {/* Clear All Button */}
       {tasks.length > 0 && (
-        <button className="clear-btn" onClick={handleClearAll}>
-          Clear All
-        </button>
+        <div className="text-center">
+          <button className="clear-btn btn btn-danger" onClick={handleClearAll}>
+            Clear All
+          </button>
+        </div>
       )}
     </div>
   );
